@@ -8,15 +8,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=minihttp
-PKG_VERSION:=2019-11-11
+PKG_VERSION:=2020-06-07
 PKG_MAINTAINER:=Chertov Maxim <chertovmv@gmail.com>
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/chertov/hi_minihttp.git
-PKG_SOURCE_VERSION:=9ce9da7dcbb5adc3c8b66e2978045ee491651c41
+PKG_SOURCE_URL:=https://github.com/syabyr/hi_minihttp.git
+PKG_SOURCE_VERSION:=f0fd02d57c3f1757d7f9e2887ba90d126f7bb273
 
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
@@ -32,7 +32,7 @@ define Package/$(PKG_NAME)
 	SUBMENU:=Multimedia
 	TITLE:=Best samples for Hisilicon devices
 	MAINTAINER:=chertovmv@gmail.com
-	DEPENDS:=@(TARGET_hi35xx) +libpthread +hisi-osdrv2-base +hisi-osdrv2-kmod +hisi-osdrv2-lib +libevent2 +lame-lib
+	DEPENDS:=@(TARGET_hi35xx) +libpthread +hisi-osdrv2-base +hisi-osdrv2-kmod +hisi-osdrv2-lib +libevent2 +lame-lib +libstdcpp +libmp4v2
 endef
 
 define Package/$(PKG_NAME)/description
@@ -45,6 +45,9 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/etc
 	#$(CP) $(PKG_BUILD_DIR)/$(PKG_NAME).ini $(1)/etc/
 	$(INSTALL_CONF) ./files/$(PKG_NAME).ini $(1)/etc/
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(CP) $(PKG_BUILD_DIR)/mp4v2/lib/libmp4v2.so $(1)/usr/lib/libmp4v2.so.2
+	#ln -s $(1)/usr/lib/libmp4v2.so $(1)/usr/lib/libmp4v2.so.2
 
 endef
 
